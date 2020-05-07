@@ -3,7 +3,7 @@
 
 
 #define ASSERT_EXCEPT(Expr) AssertException(__LINE__,__FILE__,#Expr)
-#define THROW_ASSERT_EXCEPT(Expr) if(!(Expr)) throw ASSERT_EXCEPT(Expr)
+#define THROW_ASSERT_EXCEPT(Expr) throw ASSERT_EXCEPT(Expr)
 
 #ifndef ASSERT
 #define ASSERT(Expr) if(!(Expr)) THROW_ASSERT_EXCEPT(Expr)

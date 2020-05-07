@@ -21,13 +21,16 @@
   <ItemGroup>
     <ClCompile Include="Source\Console.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\ThreadPool.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AssertException.h" />
     <ClInclude Include="Source\Console.h" />
     <ClInclude Include="Source\Exception.h" />
+    <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\HrExpection.h" />
+    <ClInclude Include="Source\ThreadPool.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
@@ -100,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

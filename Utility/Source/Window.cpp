@@ -1,9 +1,9 @@
 #include "Window.h"
 #include "Console.h"
+#include "Global.h"
 
 Window::Window()
 {
-
 }
 
 Window::Window(const wchar_t* WindowName, int Width, int Height, LRESULT(CALLBACK* WndProc)(HWND, UINT, WPARAM, LPARAM))
@@ -19,6 +19,7 @@ Window::~Window()
 
 void Window::Create(const wchar_t* WindowName, int Width, int Height, LRESULT(CALLBACK* WndProc)(HWND, UINT, WPARAM, LPARAM))
 {
+	GlobalVariable<Window>::Set(this);
 	m_Width = Width;
 	m_Height = Height;
 	//创建窗口类
@@ -43,6 +44,8 @@ void Window::Show()
 
 bool Window::Resize(int Width, int Height)
 {
+	m_Width = Width;
+	m_Height = Height;
 	RECT Rect;
 	PRINT_LAST_ERROR_IF_FALSE(GetWindowRect(m_hWnd, &Rect));
 	PRINT_LAST_ERROR_IF_FALSE(MoveWindow(m_hWnd,Rect.left, Rect.top, Width, Height,true));
@@ -76,6 +79,10 @@ LRESULT WINAPI Window::DefaultWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 {
 	switch (msg)
 	{
+	case WM_SIZE: //大小改变
+		GlobalVariable<Window>::Get()->SetWidth((UINT)LOWORD(lParam));
+		GlobalVariable<Window>::Get()->SetHeight((UINT)HIWORD(lParam));
+		return 0;
 	case WM_DESTROY: //窗口销毁
 		::PostQuitMessage(0);
 		return 0;
