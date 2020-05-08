@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Console.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\ThreadPool.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\HrExpection.h" />
     <ClInclude Include="Source\ThreadPool.h" />
+    <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>

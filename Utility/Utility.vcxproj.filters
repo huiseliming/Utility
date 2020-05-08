@@ -11,6 +11,9 @@
     <Filter Include="Source\Exception">
       <UniqueIdentifier>{81a1b7f5-7016-42ef-9150-4b919101abe2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Unuse">
+      <UniqueIdentifier>{16448e21-996c-48ff-a67e-c7b91bf87a01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Console.cpp">
@@ -24,6 +27,9 @@
     </ClCompile>
     <ClCompile Include="Source\ThreadPool.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Source\Unuse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="Source\ThreadPool.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Source\Unuse</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

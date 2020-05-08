@@ -38,7 +38,10 @@ public:
 	{
 		start();
 	}
-
+	explicit ThreadPool(uint32_t NumThread)
+	{
+		start(NumThread);
+	}
 	~ThreadPool()
 	{
 		stop();
@@ -73,9 +76,10 @@ private:
 	std::queue<std::function<void()>> m_Tasks;
 	std::condition_variable m_ConditionVariable;
 
-	void start()
+	void start(uint32_t NumThread = 0)
 	{
-		for (size_t i = 0; i < std::thread::hardware_concurrency(); i++)
+		uint32_t Count = NumThread ? NumThread : std::thread::hardware_concurrency();
+		for (size_t i = 0; i < Count; i++)
 		{
 			m_Threads.emplace_back([=] {
 				std::function<void()> task;
