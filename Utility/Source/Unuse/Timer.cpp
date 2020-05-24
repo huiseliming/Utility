@@ -1,5 +1,6 @@
 #include "Timer.h"
 #include <algorithm>
+
 void TimerManager::DoLoop()
 {
 	ThreadPool AsynPool(16);

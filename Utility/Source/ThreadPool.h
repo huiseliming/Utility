@@ -53,7 +53,7 @@ public:
 	auto enqueue(std::function<Ret(Args...)>&& task, Args&& ...args)->std::future<Ret>
 	{
 		std::shared_ptr< std::packaged_task< Ret() >> wrapper = std::make_shared<std::packaged_task<Ret()>>(
-			[ task = std::move(task), args = std::make_tuple(std::forward<Args>(args)...)]()->Ret
+			[ task = std::forward<std::function<Ret(Args...)>>(task), args = std::make_tuple(std::forward<Args>(args)...)]()->Ret
 			{
 				return std::apply(task, args);
 			}

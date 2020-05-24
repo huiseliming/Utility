@@ -14,6 +14,9 @@
     <Filter Include="Source\Unuse">
       <UniqueIdentifier>{16448e21-996c-48ff-a67e-c7b91bf87a01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Test">
+      <UniqueIdentifier>{01226c37-78c2-49ee-81ed-fc73ffff46b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Console.cpp">
@@ -28,8 +31,11 @@
     <ClCompile Include="Source\ThreadPool.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
+    <ClCompile Include="Source\Unuse\Timer.cpp">
       <Filter>Source\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test\LockTest.h">
+      <Filter>Source\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,8 +63,11 @@
     <ClInclude Include="Source\ThreadPool.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Timer.h">
+    <ClInclude Include="Source\Unuse\Timer.h">
       <Filter>Source\Unuse</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
