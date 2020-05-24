@@ -12,7 +12,7 @@
 inline int locktestmain()
 {
 	std::mutex a;
-	std::vector <int> k;
+	std::vector <size_t> k;
 	for (size_t i = 0; i < 100; i++)
 	{
 		k.push_back(0);

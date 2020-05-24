@@ -1,7 +1,7 @@
 #include "Utility.h"
 #include "ThreadPool.h"
 
-
+#include "Unuse/MySQLUtility.h"
 class A
 {
 public:
@@ -39,6 +39,7 @@ public:
 
 int main(int argc, char* argv[])
 {
+	test();
 	try
 	{
 		ThreadPool tp;

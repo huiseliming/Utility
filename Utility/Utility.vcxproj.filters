@@ -37,6 +37,9 @@
     <ClCompile Include="Source\Test\LockTest.h">
       <Filter>Source\Test</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Unuse\MySQLUtility.cpp">
+      <Filter>Source\Unuse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Console.h">
@@ -64,6 +67,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Unuse\Timer.h">
+      <Filter>Source\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Unuse\MySQLUtility.h">
       <Filter>Source\Unuse</Filter>
     </ClInclude>
   </ItemGroup>
