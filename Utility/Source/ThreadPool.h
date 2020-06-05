@@ -53,8 +53,10 @@ public:
 	{
 		std::shared_ptr<std::function<void()>> executeTask = 
 			std::make_shared<std::function<void()>>(
-				[ task = std::forward<Task>(task), args = std::make_tuple(std::forward<Args>(args)...)]()
-				{ return std::apply(std::move(task), std::move(args)); }
+				[ task = std::move(task), args = std::make_tuple(std::forward<Args>(args)...)]() mutable
+				{ 
+					return std::apply(std::move(task), std::move(args)); 
+				}
 			);
 
 		{
@@ -78,15 +80,17 @@ public:
 		}
 		m_ConditionVariable.notify_one();
 	}
-
+	
 
 	template<typename Task, typename ...Args>
 	auto AsyncPackagedTask(Task&& task, Args&& ...args)->std::future<decltype(std::forward<Task>(task)(args...))>
 	{
 		std::shared_ptr< std::packaged_task<decltype(std::forward<Task>(task)(args...))()> > packagedTask =
 		std::make_shared< std::packaged_task<decltype(std::forward<Task>(task)(args...))()> >(	
-			[task = std::forward<Task>(task), args = std::make_tuple(std::forward<Args>(args)...)]()
-			{ return std::apply(std::move(task), std::move(args)); }
+			[task = std::move(task), args = std::make_tuple(std::forward<Args>(args)...)]() mutable
+			{ 
+				return std::apply(std::move(task), std::move(args)); 
+			}
 		);
 
 		{
