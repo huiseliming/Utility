@@ -27,46 +27,93 @@
 #include<thread>
 #include<queue>
 #include<future>
+#include<iostream>
 #include"Global.h"
 
-#define AsyncTask(task,...) GlobalVariable<ThreadPool>::Get()->enqueue(std::function(task),##__VA_ARGS__);
+#define GLOBAL_THREAD_POOL GlobalVariable<ThreadPool>::Get()
 
 class ThreadPool
 { 
 public:
 	explicit ThreadPool()
 	{
-		start();
+		Start();
 	}
 	explicit ThreadPool(uint32_t NumThread)
 	{
-		start(NumThread);
+		Start(NumThread);
 	}
 	~ThreadPool()
 	{
-		stop();
+		Stop();
 	}
 
-	//使用传值函数参数会造成是4次移动构造，3次析构，
-	//传指针和传值？
-	template<typename Ret, typename ...Args>
-	auto enqueue(std::function<Ret(Args...)>&& task, Args&& ...args)->std::future<Ret>
+	template<typename Task, typename ...Args>
+	void AsyncExecuteTask(Task&& task, Args&& ...args)
 	{
-		std::shared_ptr< std::packaged_task< Ret() >> wrapper = std::make_shared<std::packaged_task<Ret()>>(
-			[ task = std::forward<std::function<Ret(Args...)>>(task), args = std::make_tuple(std::forward<Args>(args)...)]()->Ret
-			{
-				return std::apply(task, args);
-			}
-		);
+		std::shared_ptr<std::function<void()>> executeTask = 
+			std::make_shared<std::function<void()>>(
+				[ task = std::forward<Task>(task), args = std::make_tuple(std::forward<Args>(args)...)]()
+				{ return std::apply(std::move(task), std::move(args)); }
+			);
+
 		{
 			std::unique_lock<std::mutex> UniqueLock(m_Mutex);
 			m_Tasks.emplace([=] {
-				(*wrapper)();
+				(*executeTask)();
 			});
 		}
 		m_ConditionVariable.notify_one();
-		return wrapper->get_future();
 	}
+
+	template<typename Task>
+	void AsyncExecuteTask(Task&& task)
+	{
+		std::shared_ptr<std::function<void()>> executeTask = std::make_shared<std::function<void()>>(std::forward<Task>(task));
+		{
+			std::unique_lock<std::mutex> UniqueLock(m_Mutex);
+			m_Tasks.emplace([=] {
+				(*executeTask)();
+			});
+		}
+		m_ConditionVariable.notify_one();
+	}
+
+
+	template<typename Task, typename ...Args>
+	auto AsyncPackagedTask(Task&& task, Args&& ...args)->std::future<decltype(std::forward<Task>(task)(args...))>
+	{
+		std::shared_ptr< std::packaged_task<decltype(std::forward<Task>(task)(args...))()> > packagedTask =
+		std::make_shared< std::packaged_task<decltype(std::forward<Task>(task)(args...))()> >(	
+			[task = std::forward<Task>(task), args = std::make_tuple(std::forward<Args>(args)...)]()
+			{ return std::apply(std::move(task), std::move(args)); }
+		);
+
+		{
+			std::unique_lock<std::mutex> UniqueLock(m_Mutex);
+			m_Tasks.emplace([=] {
+				(*packagedTask)();
+			});
+		}
+		m_ConditionVariable.notify_one();
+		return packagedTask->get_future();
+	}
+
+	template<typename Task>
+	auto AsyncPackagedTask(Task&& task)->std::future<decltype(std::forward<Task>(task)())>
+	{
+		std::shared_ptr< std::packaged_task<decltype(std::forward<Task>(task)())()> > packagedTask =
+		std::make_shared< std::packaged_task<decltype(std::forward<Task>(task)())()> >(task);
+		{
+			std::unique_lock<std::mutex> UniqueLock(m_Mutex);
+			m_Tasks.emplace([=] {
+				(*packagedTask)();
+			});
+		}
+		m_ConditionVariable.notify_one();
+		return packagedTask->get_future();
+	}
+
 
 private:
 	bool m_Stopping = false;
@@ -76,7 +123,7 @@ private:
 	std::queue<std::function<void()>> m_Tasks;
 	std::condition_variable m_ConditionVariable;
 
-	void start(uint32_t NumThread = 0)
+	void Start(uint32_t NumThread = 0)
 	{
 		uint32_t Count = NumThread ? NumThread : std::thread::hardware_concurrency();
 		for (size_t i = 0; i < Count; i++)
@@ -99,7 +146,7 @@ private:
 		}
 	}
 
-	void stop()noexcept
+	void Stop()noexcept
 	{
 		{
 			std::unique_lock<std::mutex> lock{ m_Mutex };
