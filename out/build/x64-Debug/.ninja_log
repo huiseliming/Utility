@@ -1,0 +1,9 @@
+# ninja log v5
+1	913	613672523	test/CMakeFiles/src_HelloWorld.dir/src/HelloWorld.cpp.obj	d136fb7bef54cbb8
+5	919	613672523	utility/CMakeFiles/utility.dir/src/Utility.cpp.obj	6b900b4abd1fe887
+7	924	613672523	test/CMakeFiles/HelloWorld.dir/HelloWorld/src/HelloWorld.cpp.obj	1c41c3d76233c782
+919	997	613672523	utility/utility.lib	bf27dfbc6fff5a5a
+10	1379	613672523	test/CMakeFiles/src_thread_pool.dir/src/thread_pool.cpp.obj	3324cbeaae7c3fa9
+913	2531	613672524	test/src_HelloWorld.exe	a2bd4dd4aad2f6e7
+1379	2532	613672524	test/src_thread_pool.exe	991c3c1c0e6c1dd5
+924	2532	613672524	test/HelloWorld.exe	57005a23cba29a0c

@@ -1,0 +1,11 @@
+D:/GitProject/Utility/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/GitProject/Utility/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/GitProject/Utility/out/build/x64-Debug/utility/CMakeFiles/utility.dir
+D:/GitProject/Utility/out/build/x64-Debug/utility/CMakeFiles/edit_cache.dir
+D:/GitProject/Utility/out/build/x64-Debug/utility/CMakeFiles/rebuild_cache.dir
+D:/GitProject/Utility/out/build/x64-Debug/test/CMakeFiles/src_HelloWorld.dir
+D:/GitProject/Utility/out/build/x64-Debug/test/CMakeFiles/src_ImGuiWindow.dir
+D:/GitProject/Utility/out/build/x64-Debug/test/CMakeFiles/HelloWorld.dir
+D:/GitProject/Utility/out/build/x64-Debug/test/CMakeFiles/src_thread_pool.dir
+D:/GitProject/Utility/out/build/x64-Debug/test/CMakeFiles/edit_cache.dir
+D:/GitProject/Utility/out/build/x64-Debug/test/CMakeFiles/rebuild_cache.dir
