@@ -13,6 +13,9 @@
 
 #pragma once
 #include "imgui.h"      // IMGUI_IMPL_API
+/* Modify By DaiMingze Begin */
+#define USE_DAIMINGZE_MODIFY
+/* Modify By DaiMingze End */
 
 enum DXGI_FORMAT;
 struct ID3D12Device;
