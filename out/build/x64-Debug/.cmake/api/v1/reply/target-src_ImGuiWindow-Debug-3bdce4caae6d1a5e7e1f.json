@@ -15,7 +15,9 @@
 		[
 			"_add_executable",
 			"add_executable",
-			"include_directories"
+			"target_link_libraries",
+			"include_directories",
+			"target_include_directories"
 		],
 		"files" : 
 		[
@@ -31,7 +33,7 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 15,
+				"line" : 14,
 				"parent" : 0
 			},
 			{
@@ -41,18 +43,36 @@
 				"parent" : 1
 			},
 			{
-				"file" : 2
-			},
-			{
 				"command" : 2,
-				"file" : 2,
-				"line" : 47,
-				"parent" : 3
+				"file" : 1,
+				"line" : 19,
+				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 1,
+				"line" : 20,
+				"parent" : 0
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 50,
+				"parent" : 5
+			},
+			{
+				"command" : 3,
+				"file" : 1,
 				"line" : 6,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 16,
 				"parent" : 0
 			}
 		]
@@ -66,15 +86,31 @@
 					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1  "
 				}
 			],
-			"includes" : 
+			"defines" : 
 			[
 				{
 					"backtrace" : 4,
+					"define" : "GLFW_DLL"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 6,
 					"path" : "D:/GitProject/Utility/third_party/inc"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 7,
 					"path" : "D:/GitProject/Utility/test/../utility/inc"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "C:/VulkanSDK/1.2.131.2/Include"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "E:/vcpkg/installed/x64-windows/include"
 				}
 			],
 			"language" : "CXX",
@@ -82,6 +118,13 @@
 			[
 				0
 			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "imgui::@037116246cbfaaeb5504"
 		}
 	],
 	"id" : "src_ImGuiWindow::@36f028580bb02cc8272a",
@@ -96,6 +139,24 @@
 			{
 				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
 				"role" : "flags"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "..\\third_party\\imgui.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "..\\third_party\\imgui.lib",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "C:\\VulkanSDK\\1.2.131.2\\Lib\\vulkan-1.lib",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "E:\\vcpkg\\installed\\x64-windows\\debug\\lib\\glfw3dll.lib",
+				"role" : "libraries"
 			},
 			{
 				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",

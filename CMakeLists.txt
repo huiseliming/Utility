@@ -5,6 +5,13 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("Utility")
 
+#glfw
+find_package(glfw3 CONFIG REQUIRED)
+#Vulkan
+find_package(Vulkan REQUIRED FATAL_ERROR)
+#spdlog
+find_package(spdlog CONFIG REQUIRED)
+
 #添加包含目录
 function(include_sub_directories_recursively root_dir inc_self)
     if ((IS_DIRECTORY ${root_dir}) # 当前路径是一个目录吗，是的话就加入到包含目录
@@ -40,12 +47,8 @@ endfunction()
 
 # Include sub-projects.
 
-
-find_package(spdlog CONFIG REQUIRED)
-
-
 include_directories(third_party/inc/)
 
+add_subdirectory("third_party")
 add_subdirectory("utility")
 add_subdirectory("test")
-

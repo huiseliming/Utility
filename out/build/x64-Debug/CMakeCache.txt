@@ -236,6 +236,15 @@ VCPKG_TARGET_TRIPLET:STRING=x64-windows
 //Enables messages from the VCPKG toolchain for debugging purposes.
 VCPKG_VERBOSE:BOOL=OFF
 
+//The directory containing a CMake configuration file for Vulkan.
+Vulkan_DIR:PATH=Vulkan_DIR-NOTFOUND
+
+//Path to a file.
+Vulkan_INCLUDE_DIR:PATH=C:/VulkanSDK/1.2.131.2/Include
+
+//Path to a library.
+Vulkan_LIBRARY:FILEPATH=C:/VulkanSDK/1.2.131.2/Lib/vulkan-1.lib
+
 //Path to a file.
 ZLIB_INCLUDE_DIR:PATH=E:/vcpkg/installed/x64-windows/include
 
@@ -253,6 +262,12 @@ curl_DIR:PATH=E:/vcpkg/installed/x64-windows/share/curl
 
 //The directory containing a CMake configuration file for fmt.
 fmt_DIR:PATH=E:/vcpkg/installed/x64-windows/share/fmt
+
+//The directory containing a CMake configuration file for glfw3.
+glfw3_DIR:PATH=E:/vcpkg/installed/x64-windows/share/glfw3
+
+//Dependencies for the target
+imgui_LIB_DEPENDS:STATIC=general;glfw;general;C:/VulkanSDK/1.2.131.2/Lib/vulkan-1.lib;
 
 //The directory containing a CMake configuration file for jsoncpp.
 jsoncpp_DIR:PATH=E:/vcpkg/installed/x64-windows/share/jsoncpp
@@ -355,7 +370,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MT
 CMAKE_MT-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_RC_COMPILER
@@ -405,6 +420,8 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[E:/vcpkg/installed/x64-windows/include][c ][v1.72.0()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Details about finding Vulkan
+FIND_PACKAGE_MESSAGE_DETAILS_Vulkan:INTERNAL=[C:/VulkanSDK/1.2.131.2/Lib/vulkan-1.lib][C:/VulkanSDK/1.2.131.2/Include][v()]
 //Details about finding ZLIB
 FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[optimized;E:/vcpkg/installed/x64-windows/lib/zlib.lib;debug;E:/vcpkg/installed/x64-windows/debug/lib/zlibd.lib][E:/vcpkg/installed/x64-windows/include][v1.2.11(1)]
 //ADVANCED property for variable: FREETYPE_INCLUDE_DIR_freetype2
@@ -417,6 +434,10 @@ FREETYPE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 FREETYPE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: VCPKG_VERBOSE
 VCPKG_VERBOSE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_INCLUDE_DIR
+Vulkan_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_LIBRARY
+Vulkan_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ZLIB_INCLUDE_DIR
 ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ZLIB_LIBRARY_DEBUG

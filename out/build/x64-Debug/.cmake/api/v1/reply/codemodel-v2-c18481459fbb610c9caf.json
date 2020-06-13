@@ -9,7 +9,8 @@
 					"childIndexes" : 
 					[
 						1,
-						2
+						2,
+						3
 					],
 					"minimumCMakeVersion" : 
 					{
@@ -17,6 +18,20 @@
 					},
 					"projectIndex" : 0,
 					"source" : "."
+				},
+				{
+					"build" : "third_party",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "third_party",
+					"targetIndexes" : 
+					[
+						1
+					]
 				},
 				{
 					"build" : "utility",
@@ -29,7 +44,7 @@
 					"source" : "utility",
 					"targetIndexes" : 
 					[
-						4
+						5
 					]
 				},
 				{
@@ -44,9 +59,9 @@
 					"targetIndexes" : 
 					[
 						0,
-						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -58,7 +73,8 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3
 					],
 					"name" : "Utility",
 					"targetIndexes" : 
@@ -67,44 +83,52 @@
 						1,
 						2,
 						3,
-						4
+						4,
+						5
 					]
 				}
 			],
 			"targets" : 
 			[
 				{
-					"directoryIndex" : 2,
+					"directoryIndex" : 3,
 					"id" : "HelloWorld::@36f028580bb02cc8272a",
-					"jsonFile" : "target-HelloWorld-Debug-404fb1eb45679a7a9f57.json",
+					"jsonFile" : "target-HelloWorld-Debug-8d8eca57dcb2dc05e242.json",
 					"name" : "HelloWorld",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 2,
+					"directoryIndex" : 1,
+					"id" : "imgui::@037116246cbfaaeb5504",
+					"jsonFile" : "target-imgui-Debug-aa6df89ee3e8b8a2a24b.json",
+					"name" : "imgui",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
 					"id" : "src_HelloWorld::@36f028580bb02cc8272a",
-					"jsonFile" : "target-src_HelloWorld-Debug-44acdbb4263fdc45fde4.json",
+					"jsonFile" : "target-src_HelloWorld-Debug-8876dc3c35e2f537c4ff.json",
 					"name" : "src_HelloWorld",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 2,
+					"directoryIndex" : 3,
 					"id" : "src_ImGuiWindow::@36f028580bb02cc8272a",
-					"jsonFile" : "target-src_ImGuiWindow-Debug-826462bf6f92dff0b4db.json",
+					"jsonFile" : "target-src_ImGuiWindow-Debug-3bdce4caae6d1a5e7e1f.json",
 					"name" : "src_ImGuiWindow",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 2,
+					"directoryIndex" : 3,
 					"id" : "src_thread_pool::@36f028580bb02cc8272a",
-					"jsonFile" : "target-src_thread_pool-Debug-f4f95458933fc168c24a.json",
+					"jsonFile" : "target-src_thread_pool-Debug-9fe15c679948fdf1c11c.json",
 					"name" : "src_thread_pool",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 1,
+					"directoryIndex" : 2,
 					"id" : "utility::@23b027168f11ea0d609c",
-					"jsonFile" : "target-utility-Debug-f9b53b55b4f25195f6cc.json",
+					"jsonFile" : "target-utility-Debug-f0c3b634319cb8d83125.json",
 					"name" : "utility",
 					"projectIndex" : 0
 				}
