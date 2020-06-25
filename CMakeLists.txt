@@ -5,13 +5,6 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("Utility")
 
-#glfw
-find_package(glfw3 CONFIG REQUIRED)
-#Vulkan
-find_package(Vulkan REQUIRED FATAL_ERROR)
-#spdlog
-find_package(spdlog CONFIG REQUIRED)
-
 #添加包含目录
 function(include_sub_directories_recursively root_dir inc_self)
     if ((IS_DIRECTORY ${root_dir}) # 当前路径是一个目录吗，是的话就加入到包含目录
@@ -45,9 +38,32 @@ function(include_sub_directories root_dir inc_self)
     endforeach()
 endfunction()
 
-# Include sub-projects.
+message(STATUS "compiler: " ${CMAKE_CXX_COMPILER_ID})
+#set(CMAKE_C_COMPILER "/usr/bin/gcc-8")
+#set(CMAKE_CXX_COMPILER "/usr/bin/g++-8")
+#set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_EXTENSIONS OFF)
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+#add_compile_options(-Wformat=0)
 
-include_directories(third_party/inc/)
+
+#glfw
+find_package(glfw3 CONFIG REQUIRED)
+#Vulkan
+find_package(Vulkan REQUIRED FATAL_ERROR)
+#spdlog
+find_package(spdlog CONFIG REQUIRED)
+#jsoncpp
+find_package(jsoncpp CONFIG REQUIRED)
+#drogon
+find_package(Drogon CONFIG REQUIRED)
+#ssl
+find_package(OpenSSL REQUIRED)
+
+# Include sub-projects.
+include_directories(third_party/)
 
 add_subdirectory("third_party")
 add_subdirectory("utility")

@@ -1,0 +1,9 @@
+{
+    "rdbms":"mysql",
+    "host":"169.254.36.89",
+    "port":3306,
+    "dbname":"ccdb",
+    "user":"dmz",
+    "passwd":"dmz",
+    "tables":["remote_device_info","file_mark"]
+}

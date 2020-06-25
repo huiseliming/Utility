@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
+message("test Label BEGIN")
 
-
-
-message("-->[0] test BEGIN")
 include_directories(../utility/inc/)
 
 file(GLOB ALL_SRC_TEST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp) # 获得源目录下的所有测试文件，放入ALL_SRC_TEST列表中
@@ -26,8 +24,7 @@ endforeach()
 #message("---->[1] ./src END")
 
 
-
-
+#[[
 file(GLOB ALL_TEST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*) # 获得当前目录下的所有文件，放入ALL_TEST列表中
 foreach(SUB_TEST ${ALL_TEST})
     if ((IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${SUB_TEST}) # 当前路径是一个目录吗，是的话就加入到包含目录
@@ -45,6 +42,21 @@ foreach(SUB_TEST ${ALL_TEST})
         #message("---->[1] ./" ${SUB_TEST} " END")
     endif()
 endforeach()
+]]
 
-message("-->[0] test END")
+file(GLOB ALL_TEST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*) # 获得当前目录下的所有文件，放入ALL_TEST列表中
+foreach(SUB_TEST ${ALL_TEST})
+    if ((IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${SUB_TEST}) # 当前路径是一个目录吗，是的话就加入到包含目录
+    AND( NOT(${SUB_TEST} MATCHES ".*\\/\\..*") ) # 忽略.开头的隐藏文件
+    AND( NOT(${SUB_TEST} MATCHES ".*\\/out\\/*.*") ) # 忽略输出目录的文件
+    AND( NOT(${SUB_TEST} EQUAL ${CMAKE_CURRENT_SOURCE_DIR})) # 不包含根目录
+    AND( NOT(${SUB_TEST} STREQUAL "src")) # 不包含src
+    )
+    add_subdirectory(${SUB_TEST})
+    endif()
+endforeach()
+
+
+
+message("test Label END")
 
