@@ -66,7 +66,7 @@ void InitializeDrogon()
     }
 }
 
-void TerminateDrogon()
+void ShutdownDrogon()
 {
     std::unique_lock<std::mutex> lock(s_drogonMutex);
     s_runDrogon = false;

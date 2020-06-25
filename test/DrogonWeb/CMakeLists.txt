@@ -9,6 +9,7 @@ message("DrogonWeb")
 FILE(GLOB_RECURSE SOURCE_FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/*.h
     )
 	 
 message(${SOURCE_FILES})

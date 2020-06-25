@@ -1,7 +1,10 @@
 #include <iostream>
 #include <drogon/drogon.h>
 #include <filesystem>
+#include <spdlog/spdlog.h>
 #include "HTTPApp.h"
+#include "LogDefine.h"
+#include "ThreadPool.h"
 
 //static AsioUdpService* s_pAsioUdpService = nullptr;
 //static RelayService* s_pRelayService = nullptr;
@@ -36,29 +39,55 @@
 //    AsioTcpService::Terminate();
 //}
 
+//由于ThreadPool对象在main之外构造和析构，
+//所以接到命令行窗口关闭事件之后通知主线程，
+//阻塞这个系统回调函数等待主线程退出
+static bool s_bApplicationStop = false;
+static bool s_bApplicationStopComplete = true;
+BOOL ConsoleCtrlCallback(DWORD CtrlType)
+{
+    switch (CtrlType)
+    {
+    case CTRL_C_EVENT:
+        s_bApplicationStop = true;
+        return TRUE;
+    case CTRL_CLOSE_EVENT:
+        s_bApplicationStop = true;
+        s_bApplicationStopComplete = false;
+        while(!s_bApplicationStopComplete)
+            std::this_thread::yield();
+        //ExitThread(0);
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
 int main()
 {
-    std::cout << "Current Run Path " << std::filesystem::current_path() << std::endl;
-    std::cout << "Initialize Drogon" << std::endl;
+    //设置窗口事件回调通知应用程序退出
+    SetConsoleCtrlHandler(ConsoleCtrlCallback, TRUE);
+    //初始化
+    std::shared_ptr<spdlog::logger> log;
+    spdlog::info("Initialize spdlog");
+    Initialize_spdlog();
+    log = spdlog::get("basic_logger_mt");
+    spdlog::info("StartPath->{}", std::filesystem::current_path().string());
+    spdlog::info("Initialize drogon");
     InitializeDrogon();
-    while (true)
+    log->info("Application Start Run");
+    //主循环
+    while (!s_bApplicationStop)
     {
-        std::cout << "[Console]";
-        std::string consoleinput;
-        std::cin >> consoleinput;
-        if (!consoleinput.compare("exit"))
-        {
-            std::cout << "Application will exit" << std::endl;
-            break;
-        }
-        else
-        {
-            std::cout << std::endl;
-        }
+        std::this_thread::yield();
     }
-    std::cout << "Terminate Drogon" << std::endl;
-    TerminateDrogon();
-    std::cout<< "GoodBye" << std::endl;
+    //退出清理
+    log->info("Application Start Exit");
+    spdlog::info("Terminate drogon");
+    ShutdownDrogon();
+    spdlog::info("Terminate spdlog");
+    Shutdown_spdlog();
+    std::cout << "GoodBye" << std::endl;
     return 0;
 }
 

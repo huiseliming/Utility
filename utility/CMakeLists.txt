@@ -8,15 +8,11 @@ include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR} false) # 获取�
 FILE(GLOB_RECURSE SOURCE_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp) # 获取当前目录源文件
 FILE(GLOB_RECURSE HEADER_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/inc/*.h)   # 获取当前目录头文件
 
+message(${SOURCE_FILES})
+message(${HEADER_FILES})
 
 # Add source to this pro"src/Utility.cpp"able.
 add_library(utility STATIC ${SOURCE_FILES} ${HEADER_FILES})
-
-target_link_libraries(utility PRIVATE
-	spdlog::spdlog 
-	spdlog::spdlog_header_only
-	)
-
 # TODO: Add tests and install targets if needed.
 
 

@@ -4,7 +4,7 @@ void RunDrogon();
 
 void InitializeDrogon();
 
-void TerminateDrogon();
+void ShutdownDrogon();
 
 
 
