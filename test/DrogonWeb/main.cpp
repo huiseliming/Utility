@@ -68,26 +68,40 @@ int main()
     //设置窗口事件回调通知应用程序退出
     SetConsoleCtrlHandler(ConsoleCtrlCallback, TRUE);
     //初始化
-    std::shared_ptr<spdlog::logger> log;
-    spdlog::info("Initialize spdlog");
     Initialize_spdlog();
-    log = spdlog::get("basic_logger_mt");
-    spdlog::info("StartPath->{}", std::filesystem::current_path().string());
-    spdlog::info("Initialize drogon");
+
+
+    std::vector<std::thread> TV;
+    for (size_t i = 0; i < 100; i++)
+    {
+        TV.push_back(std::move(std::thread([]{
+            for (size_t i = 0; i < 10000; i++)
+            {
+                spdlog::info("HelloHelloHelloHelloHelloHello");
+            }
+        })));
+    }
+    for (size_t i = 0; i < 100; i++)
+    {
+        TV[i].join();
+    }
+
+    spdlog::info("Hello");
     InitializeDrogon();
-    log->info("Application Start Run");
+    spdlog::info("Initialize drogon");
+    spdlog::info("Application Start Run");
+    spdlog::info("Application StartPath->{}", std::filesystem::current_path().string());
     //主循环
     while (!s_bApplicationStop)
     {
         std::this_thread::yield();
     }
     //退出清理
-    log->info("Application Start Exit");
-    spdlog::info("Terminate drogon");
+    spdlog::info("Application Start Exit");
+    spdlog::info("Shutdown drogon");
     ShutdownDrogon();
-    spdlog::info("Terminate spdlog");
+    spdlog::info("GoodBye");
     Shutdown_spdlog();
-    std::cout << "GoodBye" << std::endl;
     return 0;
 }
 
