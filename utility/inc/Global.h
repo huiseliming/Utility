@@ -23,10 +23,22 @@
  */
 #pragma once
 #include <cassert>
+#include <vector>
+#include <functional>
 
+
+namespace Utility
+{
 /*
- * 用于在main函数之前构造的全局类
+ *
  */
+
+std::vector<std::function<void()>>& GetConstructorVector();
+std::vector<std::function<void()>>& GetDestructorVector();
+
+void ConstructorGlobalObject();
+void DestructorGlobalObject();
+
 template<typename T>
 class Global
 {
@@ -47,6 +59,7 @@ public:
     {
         return *m_pT;
     }
+
 private:
     static T* m_pT;
 };
@@ -55,33 +68,72 @@ template<class T>
 T* Global<T>::m_pT = nullptr;
 
 /*
- * main函数之前构造的全局类的内存是动态申请的，使用全局静态变量记录这块内存用于释放
+ * 记录全局对象，以正确析构
  */
 template<typename T>
-class GlobalDeleter
+class Deleter
 {
 public:
-    GlobalDeleter(T* pT)
+    Deleter(T* pT)
     {
         m_pT = pT;
     }
-    ~GlobalDeleter()
+    ~Deleter()
     {
         delete m_pT;
     }
+private:
     T* m_pT;
 };
+
 /*
- * 通过宏使用函数包装器定义一个全局类，
+ * 注册全局对象，以在ConstructorGlobalObject()中构造
  */
-#define GLOBAL_INITIALIZE(CLASS_NAME,...)\
-static std::function<GlobalDeleter<CLASS_NAME>()> GlobalInitialize =\
-[&]\
+
+template<typename T>
+class Register
+{
+public:
+    Register(bool IsRegister)
+    {
+        m_bIsRegister = IsRegister;
+    }
+private:
+    bool m_bIsRegister = false;
+};
+
+}
+
+#define GLOBAL_INITIALIZE(CLASS_NAME,...) \
+static std::function<Utility::Register<CLASS_NAME>()> ##CLASS_NAME##_Global_Initializer =\
+[]\
+{\
+    Utility::GetConstructorVector().emplace_back(\
+        []()\
+        {\
+            CLASS_NAME* ##CLASS_NAME##_Global_Ptr = new CLASS_NAME(##__VA_ARGS__); \
+            Utility::Global<CLASS_NAME>::Set(##CLASS_NAME##_Global_Ptr);\
+        }\
+    );\
+    Utility::GetDestructorVector().emplace_back(\
+        []()\
+        {\
+            delete Utility::Global<CLASS_NAME>::Get(); \
+        }\
+    );\
+    return Utility::Register<CLASS_NAME>(true);\
+};\
+static Utility::Register<CLASS_NAME> ##CLASS_NAME##_Register = ##CLASS_NAME##_Global_Initializer();
+
+/*
+ * 使用GLOBAL_INITIALIZE_BEFORE_MAIN定义的全局访问类在main()函数执行之前构造，在main()返回之后析构
+ */
+#define GLOBAL_INITIALIZE_BEFORE_MAIN(CLASS_NAME,...)\
+static std::function<Utility::Deleter<CLASS_NAME>()> ##CLASS_NAME##_Global_Initializer =\
+[]\
 {\
     CLASS_NAME* ptr = new CLASS_NAME(##__VA_ARGS__);\
-    Global<CLASS_NAME>::Set(ptr);\
-    return GlobalDeleter<CLASS_NAME>(ptr);\
+    Utility::Global<CLASS_NAME>::Set(ptr);\
+    return Utility::Deleter<CLASS_NAME>(ptr);\
 };\
-static GlobalDeleter<CLASS_NAME> ##CLASS_NAME##_Deleter = GlobalInitialize();
-
-
+static Utility::Deleter<CLASS_NAME> ##CLASS_NAME##_Deleter = ##CLASS_NAME##_Global_Initializer();

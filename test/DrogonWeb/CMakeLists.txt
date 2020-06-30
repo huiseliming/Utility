@@ -15,7 +15,7 @@ FILE(GLOB_RECURSE SOURCE_FILES
 message(${SOURCE_FILES})
 
 add_executable(main ${SOURCE_FILES})
-
+target_link_libraries(main PRIVATE utility)
 target_link_libraries(main PRIVATE
 	Drogon::Drogon 
 	pg_lib 

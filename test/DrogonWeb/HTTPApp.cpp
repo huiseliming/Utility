@@ -1,10 +1,9 @@
 #include"HTTPApp.h"
-#include<drogon/drogon.h>
-
-using namespace drogon;
 #include <thread>
 #include <iostream>
-#include <thread>
+#include <drogon/drogon.h>
+#include "LogDefine.h"
+using namespace drogon;
 
 static bool s_terminateDrogon = false;
 static bool s_runDrogon = false;
@@ -22,10 +21,10 @@ int DrogonMainLoop()
             s_drogonConditionVariable.wait(lock, [=] {return s_terminateDrogon || s_runDrogon; });
             if (s_terminateDrogon)
                 break;
-            std::cout << "Drogon Is Runing" << std::endl;
+            SPDLOG_INFO_FMT("Drogon Is Runing");
         }
         app().run();
-        std::cout << "Drogon Is Stop" << std::endl;
+        SPDLOG_INFO_FMT("Drogon Is Stop");
         std::this_thread::yield();
     }
     return 0;
@@ -41,18 +40,18 @@ void InitializeDrogon()
         .setLogLevel(trantor::Logger::kWarn)
         .addListener("0.0.0.0", 7770)
         .setThreadNum(0)
-        .setClientMaxBodySize(size_t(2ull * 1024ull *1024ull *1024ull))
+        .setClientMaxBodySize(size_t(2ull * 1024ull * 1024ull * 1024ull))
         //.registerController(std::make_shared<JsonHelloWorldCtrl>())
-        .registerSyncAdvice([](const HttpRequestPtr &req) -> HttpResponsePtr {
-            const auto &path = req->path();
-            if (path.length() == 1 && path[0] == '/')
-            {
-                auto response = HttpResponse::newHttpResponse();
-                response->setBody("<p>Hello, world!</p>");
-                return response;
-            }
-            return nullptr;
-        });
+        .registerSyncAdvice([](const HttpRequestPtr& req) -> HttpResponsePtr {
+        const auto& path = req->path();
+        if (path.length() == 1 && path[0] == '/')
+        {
+            auto response = HttpResponse::newHttpResponse();
+            response->setBody("<p>Hello, world!</p>");
+            return response;
+        }
+        return nullptr;
+    });
     s_drogonThread = std::move(std::thread(DrogonMainLoop));
     {
         std::unique_lock<std::mutex> lock(s_drogonMutex);
@@ -60,7 +59,7 @@ void InitializeDrogon()
     }
     s_drogonConditionVariable.notify_one();
     // Wait Drogon IsRunning
-    while(app().isRunning())
+    while (app().isRunning())
     {
         std::this_thread::yield();
     }
@@ -74,6 +73,7 @@ void ShutdownDrogon()
     app().quit();
     s_drogonThread.join();
 }
+
 
 
 

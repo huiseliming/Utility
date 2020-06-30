@@ -12,7 +12,7 @@ message(${SOURCE_FILES})
 message(${HEADER_FILES})
 
 # Add source to this pro"src/Utility.cpp"able.
-add_library(utility STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(utility STATIC ${SOURCE_FILES} ${HEADER_FILES} "src/ThreadPool.cpp")
 # TODO: Add tests and install targets if needed.
 
 

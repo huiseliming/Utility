@@ -14,6 +14,7 @@ foreach(SRC_TEST ${ALL_SRC_TEST})
     target_include_directories (src_${TEST_NAME} 
         PUBLIC ${Vulkan_INCLUDE_DIRS}
     )
+    target_link_libraries(src_${TEST_NAME} PRIVATE utility)
     target_link_libraries(src_${TEST_NAME} PRIVATE imgui)
     target_link_libraries(src_${TEST_NAME} PRIVATE glfw imgui)
     target_link_libraries(src_${TEST_NAME} PRIVATE ${Vulkan_LIBRARIES})

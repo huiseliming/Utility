@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <spdlog/spdlog.h>
 #include <spdlog/cfg/env.h>
 #include <spdlog/async.h>
@@ -6,6 +6,8 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/daily_file_sink.h>
+
+#define SPDLOG_USE_THREAD_POOL
 
 #define ROTATING_LOGGER_MAX_FILE_SIZE (5 * 1024 * 1024)
 #include <iostream>
@@ -15,11 +17,12 @@ void Initialize_spdlog()
 	std::vector<spdlog::sink_ptr> sinks;
 	sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
 	sinks.push_back(std::make_shared<spdlog::sinks::daily_file_sink_mt>("logs/daily_logger_mt.log", 23, 59));
-#ifdef 0 //async_logger½«ĞÅÏ¢·¢ËÍ¸øÏß³Ì³ØĞ´Èë£¬loggerÖ±½ÓÔÚµ±Ç°Ïß³ÌĞ´Èë£¬Á½ÖÖ¶¼²»»áÔì³ÉÏß³ÌÎÊÌâ
+#ifndef SPDLOG_USE_THREAD_POOL //async_loggerå°†ä¿¡æ¯å‘é€ç»™çº¿ç¨‹æ± å†™å…¥ï¼Œloggerç›´æ¥åœ¨å½“å‰çº¿ç¨‹å†™å…¥ï¼Œä¸¤ç§éƒ½ä¸ä¼šé€ æˆçº¿ç¨‹é—®é¢˜
 	auto defaultLogger = std::make_shared<spdlog::logger>("default",std::begin(sinks),std::end(sinks));
 #else
 	auto defaultLogger = std::make_shared<spdlog::async_logger>("default",std::begin(sinks),std::end(sinks),spdlog::thread_pool());
 #endif
+
 	spdlog::register_logger(defaultLogger);
 	spdlog::set_default_logger(defaultLogger);
 }

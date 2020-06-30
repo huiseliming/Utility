@@ -33,7 +33,7 @@
 #include"GlobalVariable.h"
 
 
-#define GLOBAL_THREAD_POOL Global<ThreadPool>::Get()
+#define GLOBAL_THREAD_POOL Utility::Global<ThreadPool>::Get()
 /*
  * 简单快乐的线程池，丢lambda进去就不用管的舒服编程模式
  */
@@ -182,4 +182,3 @@ private:
         }
     }
 };
-GLOBAL_INITIALIZE(ThreadPool, "GlobalThreadPool")
