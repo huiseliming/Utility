@@ -28,3 +28,10 @@ target_link_libraries(main PRIVATE
 	spdlog::spdlog 
 	spdlog::spdlog_header_only
 	)
+add_custom_command(TARGET main POST_BUILD 
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+	${CMAKE_CURRENT_SOURCE_DIR}/config.json 
+	$<TARGET_FILE_DIR:main>)
+
+
+
