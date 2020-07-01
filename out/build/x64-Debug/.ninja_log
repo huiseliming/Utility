@@ -1,9 +1,0 @@
-# ninja log v5
-8	419	615311073	utility/CMakeFiles/utility.dir/src/Global.cpp.obj	7505d2686f77abb9
-420	480	615311073	utility/utility.lib	6228eff0b9491bca
-1	1238	615311074	third_party/asio/CMakeFiles/asio.dir/src/asio_ssl.cpp.obj	cdd234ade59e8665
-5	1517	615311075	third_party/asio/CMakeFiles/asio.dir/src/asio.cpp.obj	3a6de98c1c55148b
-1518	1625	615311075	third_party/asio/asio.lib	87415a11fced8f41
-12	1644	615311075	utility/test/CMakeFiles/UtilityTests.dir/src/ThreadPoolTest.cpp.obj	aaff2007829d7b67
-1645	2883	615311075	utility/test/UtilityTests.exe	910d261378dd7271
-1	1443	615314072	build.ninja	423d45ba471dc07d
