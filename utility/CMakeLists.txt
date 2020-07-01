@@ -1,19 +1,24 @@
-﻿# CMakeList.txt : CMake project for Utility, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
-message("build Utility Begin")
+﻿cmake_minimum_required(VERSION 3.12)
 
-include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR} false) # 获取当前目录文件
-FILE(GLOB_RECURSE SOURCE_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp) # 获取当前目录源文件
-FILE(GLOB_RECURSE HEADER_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/inc/*.h)   # 获取当前目录头文件
+set(This utility)
+project(${This})
 
-message(${SOURCE_FILES})
-message(${HEADER_FILES})
+FILE(GLOB_RECURSE HeaderFiles  ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h) #获取当前目录头文件
+FILE(GLOB_RECURSE SourceFiles  ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp) #获取当前目录源文件
+add_library(${This} STATIC ${SourceFiles} ${HeaderFiles}) #编译静态库
 
-# Add source to this pro"src/Utility.cpp"able.
-add_library(utility STATIC ${SOURCE_FILES} ${HEADER_FILES} "src/ThreadPool.cpp")
-# TODO: Add tests and install targets if needed.
+target_include_directories(${This} PUBLIC include)
+
+set_target_properties(${This} PROPERTIES
+    FOLDER Libraries
+)
+
+add_subdirectory(test)
 
 
-message("build Utility End")
+
+
+
+
+
+

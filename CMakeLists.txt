@@ -39,32 +39,37 @@ function(include_sub_directories root_dir inc_self)
 endfunction()
 
 message(STATUS "compiler: " ${CMAKE_CXX_COMPILER_ID})
-#set(CMAKE_C_COMPILER "/usr/bin/gcc-8")
-#set(CMAKE_CXX_COMPILER "/usr/bin/g++-8")
-#set(CMAKE_VERBOSE_MAKEFILE ON)
+
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
-#set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(CMAKE_CXX_EXTENSIONS OFF)
-#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-#add_compile_options(-Wformat=0)
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    # MSVC链接静态库(/MT),替换/MD为/MT来进行链接静态库,使用RUNTIME_STATIC_LINK控制链接静态库还是动态库
+    if(MSVC AND RUNTIME_STATIC_LINK)
+        foreach(flag
+            CMAKE_C_FLAGS
+            CMAKE_CXX_FLAGS
+            CMAKE_C_FLAGS_DEBUG
+            CMAKE_CXX_FLAGS_DEBUG
+            CMAKE_C_FLAGS_RELEASE
+            CMAKE_CXX_FLAGS_RELEASE
+            CMAKE_C_FLAGS_MINSIZEREL
+            CMAKE_CXX_FLAGS_MINSIZEREL
+            CMAKE_C_FLAGS_RELWITHDEBINFO
+            CMAKE_CXX_FLAGS_RELWITHDEBINFO
+        )
+            if(${flag} MATCHES "/MD")
+                string(REGEX REPLACE "/MD" "/MT" ${flag} "${${flag}}")
+            endif()
+        endforeach()
+    endif()
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_compile_options(-Wformat=0)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    message( FATAL_ERROR "未配置Clang")
+endif()
 
-#glfw
-find_package(glfw3 CONFIG REQUIRED)
-#Vulkan
-find_package(Vulkan REQUIRED FATAL_ERROR)
-#spdlog
-find_package(spdlog CONFIG REQUIRED)
-#jsoncpp
-find_package(jsoncpp CONFIG REQUIRED)
-#drogon
-find_package(Drogon CONFIG REQUIRED)
-#ssl
-find_package(OpenSSL REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 
-# Include sub-projects.
-include_directories(third_party/)
-
-add_subdirectory("third_party")
 add_subdirectory("utility")
-add_subdirectory("test")
